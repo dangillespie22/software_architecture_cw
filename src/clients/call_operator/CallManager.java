@@ -182,7 +182,7 @@ public class CallManager {
 	}
 	
 	private void rejectCall() { 
-		System.out.println("Hopefully they didn't die!");
+		System.out.println("Hopefully they didn't die!!");
 	}
 	
 	private void printIntro() {
