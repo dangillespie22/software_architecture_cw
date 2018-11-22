@@ -1,0 +1,5 @@
+src/config/app.config
+lib/*
+.settings
+.classpath
+.project
