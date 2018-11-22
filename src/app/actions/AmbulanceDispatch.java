@@ -11,23 +11,25 @@ import config.Config;
 public class AmbulanceDispatch {
 
 	private PrintWriter notifyChannel;
-	private int patientId;
+	private int callId;
+	private int port;
 	
-	public AmbulanceDispatch(int patientId, PrintWriter notifyChannel) {
-		this.patientId = patientId;
+	public AmbulanceDispatch(int callId, PrintWriter notifyChannel, int port) {
+		this.callId = callId;
 		this.notifyChannel = notifyChannel;
+		this.port = port;
 	}
 	
 	public void dispatch() {
 		try {
-			Socket socket = new Socket(Config.getPropValues().getProperty("ip"), Integer.parseInt(Config.getPropValues().getProperty("regionalport")));
+			Socket socket = new Socket(Config.getPropValues().getProperty("ip"), port);
 			System.out.println("Address: " + socket.getInetAddress() + ":" + socket.getPort());
 			PrintWriter o = new PrintWriter(socket.getOutputStream(), true);
 		    BufferedReader i = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		    o.println(1);
 		    
-		    PatientLookup pLookup = new PatientLookup();
-			pLookup.lookupAndBind(patientId, o);
+		    CallLookup callLookup = new CallLookup();
+		    callLookup.lookupAndBind(callId, o);
 		    notifyChannel.println(Integer.parseInt(i.readLine()));
 			
 			socket.close();

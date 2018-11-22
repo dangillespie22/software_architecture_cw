@@ -11,9 +11,8 @@ import java.sql.Timestamp;
 import config.Config;
 import db.DatabaseConnection;
 import db.PrimaryKeyHandler;
-import models.interfaces.DatabaseObject;
 
-public class Call implements CallInterface, DatabaseObject {
+public class Call implements CallInterface {
 
 	private int id;
 	private int patientId;
@@ -122,8 +121,7 @@ public class Call implements CallInterface, DatabaseObject {
 		this.callEnd = callEnd;
 	}
 	
-	@Override
-	public String toString() {
+	public String getContent() {
 		return "PatientID: " + patientId + 
 				"\nIssue: " + issue + 
 				"\nAction Taken: " + actionTaken + 

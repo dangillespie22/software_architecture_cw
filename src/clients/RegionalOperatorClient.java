@@ -10,18 +10,25 @@ import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import app.ApplicationController;
+import clients.call_operator.actions.ServerRequest;
 import config.Config;
-import models.patient.PatientInterface;
+import models.call.CallInterface;
 
 public class RegionalOperatorClient {
-
+	
+	private static final int EMERGENCY_CALLOUT = 1;
+	
 	static BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+	static Registry registry;
 	
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException, NotBoundException {
 		ServerSocket server = new ServerSocket(
-				Integer.parseInt(Config.getPropValues().getProperty("regionalport"))
+				requestPort()
 		);
+		
+		registry = LocateRegistry.getRegistry(Config.getPropValues().getProperty("ip"));
 		System.out.println("Address: " + server.getInetAddress() + ":" + server.getLocalPort());
 		System.out.println("Welcome to regional operator client..");
 		
@@ -34,16 +41,24 @@ public class RegionalOperatorClient {
 		    
 		    int action = Integer.parseInt(in.readLine());
 		    switch(action) {
-		    	case 1:
+		    	case EMERGENCY_CALLOUT:
 		    		System.out.println("Emergency callout received");
-		    		String patientId = in.readLine();
-		    		
-		    		Registry registry = LocateRegistry.getRegistry(Config.getPropValues().getProperty("ip"));
-					PatientInterface patient = (PatientInterface) registry.lookup(patientId);
-					System.out.println("Patient received: " + patient.getFirstName() + " " + patient.getLastName());
+		    		String callId = in.readLine();
+					CallInterface call = (CallInterface) registry.lookup(callId);
+					System.out.println("Call information received!\n" + call.getContent());
+					System.out.println("Dispatching ambulance");
 					out.println(1);
 		    }
 		    socket.close();
+		}
+	}
+	
+	private static int requestPort() {
+		ServerRequest request = new ServerRequest(ApplicationController.REGIONAL_CLIENT_REGISTER, "");
+		if (request.send()) {
+			return Integer.parseInt(request.getResponse());
+		} else {
+			return -1;
 		}
 	}
 }

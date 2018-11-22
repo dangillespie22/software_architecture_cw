@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.rmi.RemoteException;
 
-import models.medical_record.MedicalRecord;
+import app.ApplicationController;
 import models.medical_record.MedicalRecordInterface;
 import models.patient.PatientInterface;
 
@@ -34,7 +34,7 @@ public class PatientAction {
 				int response = Integer.parseInt(stdIn.readLine());
 				switch (response) {
 					case MEDICAL_HISTORY:
-						ServerRequest recordRequest = new ServerRequest(3, Integer.toString(patient.getMedicalRecordId()));
+						ServerRequest recordRequest = new ServerRequest(ApplicationController.MEDICAL_RECORD_LOOKUP, Integer.toString(patient.getMedicalRecordId()));
 						if (recordRequest.send()) {
 							String reference = recordRequest.getResponse();
 							RegistryLookup l = new RegistryLookup();
@@ -48,7 +48,7 @@ public class PatientAction {
 						}
 						break;
 					case AMBULANCE_RESPONSE:
-						ServerRequest request = new ServerRequest(4, Integer.toString(patient.getId()));
+						ServerRequest request = new ServerRequest(ApplicationController.AMBULANCE_DISPATCH, Integer.toString(patient.getId()));
 						if (request.send()) {
 							System.out.println("Ambulance request sent to regional hospital");
 						} else {

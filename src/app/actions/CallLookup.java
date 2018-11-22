@@ -45,7 +45,6 @@ public class CallLookup implements Lookup {
 	public void lookupAndBind(int id, PrintWriter notifySocket) {
 		Call call = byId(id);
 		if (call != null) {
-			System.out.println("CAll found");
 			String reference = call.bindRMI();
 			if (reference != null) {
 				System.out.println("Writing reference: " + reference);

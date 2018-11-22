@@ -3,9 +3,10 @@ package models.call;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 
+import models.interfaces.DatabaseObject;
 import models.interfaces.KwikRMI;
 
-public interface CallInterface extends KwikRMI {
+public interface CallInterface extends KwikRMI, DatabaseObject{
 
 	public String getLocation() throws RemoteException;
 	
@@ -32,4 +33,6 @@ public interface CallInterface extends KwikRMI {
 	public void setCallEnd(Timestamp callStart) throws RemoteException;
 	
 	public int getId() throws RemoteException;
+	
+	public String getContent() throws RemoteException;
 }

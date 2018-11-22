@@ -22,10 +22,6 @@ public class ServerRequest {
 		this.data = data;
 	}
 	
-	public ServerRequest(int requestId) {
-		this.requestId = requestId;
-	}
-	
 	public boolean send() {
 		try {
 			socket = new Socket(
