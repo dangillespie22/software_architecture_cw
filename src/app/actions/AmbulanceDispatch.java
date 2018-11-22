@@ -25,13 +25,13 @@ public class AmbulanceDispatch {
 			Socket socket = new Socket(Config.getPropValues().getProperty("ip"), port);
 			System.out.println("Address: " + socket.getInetAddress() + ":" + socket.getPort());
 			PrintWriter o = new PrintWriter(socket.getOutputStream(), true);
-		    BufferedReader i = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		    o.println(1);
-		    
-		    CallLookup callLookup = new CallLookup();
-		    callLookup.lookupAndBind(callId, o);
-		    notifyChannel.println(Integer.parseInt(i.readLine()));
-			
+			BufferedReader i = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			o.println(1);
+				    
+			CallLookup callLookup = new CallLookup();
+			callLookup.lookupAndBind(callId, o);
+			notifyChannel.println(Integer.parseInt(i.readLine()));
+				
 			socket.close();
 		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();

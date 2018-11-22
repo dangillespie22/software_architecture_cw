@@ -34,4 +34,6 @@ public interface PatientInterface extends KwikRMI {
 	public int getMedicalRecordId() throws RemoteException;
 	
 	public void setMedicalRecordId(int id) throws RemoteException;
+	
+	public String getContent() throws RemoteException;
 }

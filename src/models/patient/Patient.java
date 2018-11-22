@@ -127,4 +127,11 @@ public class Patient implements PatientInterface, DatabaseObject {
 		}
 		return reference;
 	}
+	
+	public String getContent() {
+		return "Name: " + firstName + " " + lastName + "\n" + 
+				"Address: " + house_address + "\n" + 
+				"Postcode: " + postcode + "\n" + 
+				"Date of birth: " + dateOfBirth;
+	}
 }

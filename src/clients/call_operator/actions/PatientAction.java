@@ -39,6 +39,7 @@ public class PatientAction {
 							String reference = recordRequest.getResponse();
 							RegistryLookup l = new RegistryLookup();
 							MedicalRecordInterface record = l.medicalRecordByReference(reference);
+							System.out.println("Medical history received.");
 							System.out.println("Record ID: " + record.getId());
 							record.getIssues().forEach(action -> {
 								System.out.println(action);
@@ -70,7 +71,7 @@ public class PatientAction {
 			if (reference != null) {
 				RegistryLookup lookup = new RegistryLookup();
 				patient = lookup.patientByReference(reference);
-				System.out.println("Patient received: " + patient.getFirstName() + " " + patient.getLastName());
+				System.out.println("Patient information received.\n" + patient.getContent());
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
