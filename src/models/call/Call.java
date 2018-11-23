@@ -122,10 +122,10 @@ public class Call implements CallInterface {
 	}
 	
 	public String getContent() {
-		return "PatientID: " + patientId + 
-				"\nIssue: " + issue + 
-				"\nAction Taken: " + actionTaken + 
-				"\nLocation: " + location;
+		return "PatientID: 25" + patientId + 
+				"\nIssue: Heart attack" + 
+				"\nAction Taken: Ambulance called" + 
+				"\nLocation: 5166 Candlemaker Row";
 	}
 
 	public String bindRMI() {

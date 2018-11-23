@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 
 import app.ApplicationController;
+import models.call.CallInterface;
 import models.medical_record.MedicalRecordInterface;
 import models.patient.PatientInterface;
 
@@ -16,8 +17,10 @@ public class PatientAction {
 	
 	private PatientInterface patient;
 	private BufferedReader stdIn;
+	private CallInterface call;
 	
-	public PatientAction(int patientId, BufferedReader stdIn) {
+	public PatientAction(CallInterface call, int patientId, BufferedReader stdIn) {
+		this.call = call;
 		this.stdIn = stdIn;
 		lookupPatient(1, patientId);
 	}
@@ -49,6 +52,8 @@ public class PatientAction {
 						}
 						break;
 					case AMBULANCE_RESPONSE:
+						call.setPatientId(patient.getId());
+						call.setIssue("Ambulance dispatched");
 						ServerRequest request = new ServerRequest(ApplicationController.AMBULANCE_DISPATCH, Integer.toString(patient.getId()));
 						if (request.send()) {
 							System.out.println("Ambulance request sent to regional hospital");

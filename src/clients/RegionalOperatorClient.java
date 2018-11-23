@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 import app.ApplicationController;
 import clients.call_operator.actions.ServerRequest;
@@ -48,8 +49,19 @@ public class RegionalOperatorClient {
 					System.out.println("Call information received!\n" + call.getContent());
 					System.out.println("Dispatching ambulance");
 					out.println(1);
+					notifyAmbulance(callId);
 		    }
 		    socket.close();
+		}
+	}
+	
+	private static void notifyAmbulance(String reference) {
+		try {
+			Socket socket = new Socket(Config.getPropValues().getProperty("ip"), 1050);
+			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			out.println(reference);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -29,7 +29,7 @@ public class CallManager {
 				int patientNo = Integer.parseInt(stdIn.readLine());
 				call.setPatientId(patientNo);
 				call.save();
-				PatientAction pAction = new PatientAction(patientNo, stdIn);
+				PatientAction pAction = new PatientAction(call, patientNo, stdIn);
 				pAction.start();
 				break;
 			case ApplicationController.CALL_LOOKUP:
@@ -44,9 +44,9 @@ public class CallManager {
 				System.out.println("Requesting ambulance callout");
 				System.out.print("Please enter an address: ");
 				String address = stdIn.readLine();
-				requestAmbulance(address);
 				call.setActionTaken("ambulance dispatched");
 				call.save();
+				requestAmbulance(address);
 				break;
 		}
 	}
@@ -109,7 +109,7 @@ public class CallManager {
 		}
 	}
 	
-	public void requestAmbulance(String patientId) {
+	public void requestAmbulance(String address) {
 		ServerRequest request;
 		try {
 			request = new ServerRequest(ApplicationController.AMBULANCE_DISPATCH, Integer.toString(call.getId()));
